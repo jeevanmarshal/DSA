@@ -1,0 +1,36 @@
+#3 current_sum problem
+
+def threesum(nums):
+    nums.sort()
+
+    result = []
+
+    for i in range(len(nums)):
+
+        if i > 0 and nums[i] == nums[i-1]: 
+            continue
+
+        L = i + 1
+        R = len(nums) - 1
+
+        while L < R:
+            current_sum = nums[i] + nums[L] + nums[R]
+            if current_sum < 0:
+                L += 1
+            elif current_sum > 0:
+                R -= 1
+            else:
+                result.append([nums[i],nums[L],nums[R]])
+                L += 1
+                R -= 1
+                while L < R and nums[L] == nums[L - 1]:
+                    L += 1
+                while L < R and nums[R] == nums[R + 1]:
+                    R -= 1
+
+    return result
+
+
+
+nums = [-2, 0, 0, 2, 2]
+print(threesum(nums))
