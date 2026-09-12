@@ -4,10 +4,9 @@ def min_subarray_len(nums,target):
     min_len = float('inf')
 
     for right in range(len(nums)):
+        window_sum += nums[right]
 
-       window_sum += nums[right]
-
-       while window_sum >= target:
+        while window_sum >= target:
 
             current_len = right - left + 1
             min_len = min(min_len, current_len)
@@ -15,7 +14,7 @@ def min_subarray_len(nums,target):
             window_sum -= nums[left]
             left += 1
 
-    if min_len ==float('inf'):
+    if min_len == float('inf'):
         return 0
 
     return min_len 

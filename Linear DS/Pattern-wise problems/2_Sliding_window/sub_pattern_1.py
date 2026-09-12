@@ -8,7 +8,6 @@ def slidewindow(nums, k):
     return max_sum
 
 
-
 nums = [4,2,7,3,1,6]
 k = 3
 print(slidewindow(nums,k))

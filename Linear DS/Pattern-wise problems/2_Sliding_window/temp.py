@@ -1,14 +1,22 @@
-def slidewindow(nums, k):
-    window_sum = sum(nums[0:k])
-    max_sum = window_sum
+def con_max_vowel(s,k):
+    vowel_count = 0
+    max_vowels = vowel_count
 
-    for i in range(k, len(nums)):
-        window_sum = window_sum - nums[i-k] + nums[i]
-        max_sum = max(window_sum,max_sum)
-    return max_sum
+    for i in range(k):
+        if s[i] in 'aeiou':
+            vowel_count +=1
 
+    for i in range(k, len(s)):
+        if s[i-k] in 'aeiou':
+            vowel_count -=1
 
+        if s[i] in 'aeiou':
+            vowel_count +=1
 
-nums = [4,2,7,3,1,6]
+        max_vowels = max(max_vowels, vowel_count)
+    return max_vowels
+
+s = 'abciiidef'
 k = 3
-print(slidewindow(nums,k))
+
+print(con_max_vowel(s,k))
