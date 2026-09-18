@@ -1,0 +1,90 @@
+## Prefix Sum + HashMap — Short Summary
+
+### When to use it
+
+Use **Prefix Sum + HashMap** when the problem involves:
+
+* A **contiguous subarray**
+* A condition involving its **sum**
+* Especially when you need to find/count subarrays with a target sum
+* When a normal nested-loop prefix-sum solution would be **O(n²)** and you want to reduce it to **O(n)**
+
+Core idea:
+
+```text
+current_prefix - older_prefix = target
+```
+
+So:
+
+```text
+older_prefix = current_prefix - target
+```
+
+At every position:
+
+> Calculate `current_prefix`, calculate `needed = current_prefix - target`, then check whether `needed` was seen before.
+
+---
+
+## What should the HashMap store?
+
+This depends on what the question asks.
+
+| Question asks for           | HashMap stores                  | Example                                    |
+| --------------------------- | ------------------------------- | ------------------------------------------ |
+| **Longest** subarray        | Prefix Sum → **Earliest Index** | `{5: 3}`                                   |
+| **Count** of subarrays      | Prefix Sum → **Frequency**      | `{5: 3}` means prefix `5` appeared 3 times |
+| **Existence** of a subarray | Prefix Sum → **Presence**       | `{5: True}`                                |
+
+### 1. Longest subarray → earliest index
+
+Why earliest?
+
+Because:
+
+```text
+length = current_index - old_index
+```
+
+The **earlier** the old index, the **longer** the subarray.
+
+So we usually **don't overwrite** an existing prefix:
+
+```python
+if current_prefix not in seen:
+    seen[current_prefix] = index
+```
+
+---
+
+### 2. Count subarrays → frequency
+
+Why frequency?
+
+If the needed prefix appeared **3 times**, then there are **3 different subarrays** ending at the current position.
+
+```python
+count += seen[needed]
+```
+
+Then update:
+
+```python
+seen[current_prefix] = seen.get(current_prefix, 0) + 1
+```
+
+---
+
+### ⭐ Remember this
+
+> **Longest → remember WHERE you first saw it.**
+> **Count → remember HOW MANY TIMES you saw it.**
+
+And the universal formula is:
+
+```text
+needed = current_prefix - target
+```
+
+This is the main **Prefix Sum + HashMap recognition pattern** you should carry forward.
